@@ -1,0 +1,458 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Simple Stuldy Timer</title>
+  <!-- style tag css for components: main layout, timer section, topics sections, progress bar, and button -->
+  <style>
+    
+    body {
+        margin: 0;
+        font-family: 'Comic Sans MS', cursive, sans-serif;
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        background: #f9f9f9;
+    }
+
+    .header {
+      background: #fda085;
+      color: #fff;
+      text-align: center;
+      padding: 15px 20px;
+      height: 5vh;
+      font-size: 32px;
+      font-weight: bold;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+      position: relative; 
+    }
+
+    /* ---------- App container ---------- */
+    #app {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      flex: 1;
+      padding: 20px;
+      background: linear-gradient(120deg, #f6d365, #fda085);
+
+      min-height: 80vh;
+      width: 100%;
+      box-sizing: border-box;
+    }
+
+
+    /* State management styles */
+    .state-container {
+      display: none; /* Hidden by default */
+    }
+    
+    .state-container.active {
+      display: block; /* Only show active state */
+    }
+
+    /* ---------- Screen container ---------- */
+
+        /* screen style is for clean paper quality look, which reminds of a study environment */
+            /* screen container should fill app container with rounding and padding */
+
+
+        .notebook  {
+            background: #fff;
+            border-radius: 10px;
+            padding: 20px;
+
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+
+            /* sizing */
+            height: 90%;
+            max-height: 80vh;
+            min-height: 80vh;
+            width: 80%;
+            max-width: min(900px, 90vw); /* Use the smaller of 900px or 90% viewport width */
+            min-width: min(400px, 90vw); /* Use the smaller of 500px or 90% viewport width */
+ 
+
+            /* flex */
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            
+            /* paper feel */
+            overflow-y: auto;
+            position: relative;
+
+             /* Notebook-style horizontal lines */
+            background-image: linear-gradient(#e1e1e1 1px, transparent 1px);
+            background-size: 100% 24px;
+            background-position: 0 0;
+            
+            /* Add a subtle left margin line like a notebook */
+            border-left: 1px solid #d4d4d4;
+        }
+
+        .notebook::before {
+            content: "";
+            position: absolute;
+            left: 30px;
+            top: 0;
+            height: 100%;
+            width: 1px;
+            background-color: #ff9e9e; /* Light red line */
+            opacity: 0.6;
+        }
+     /* ---------- Card Components ---------- */
+            /* timer, topics, progress bar */
+
+            .button {
+                background: #fda085;
+                color: white;
+                border: none;
+                border-radius: 5px;
+                padding: 5px 10px;
+                margin: 5px;
+                cursor: pointer;
+            } 
+
+        /* ---------- Timer ----------- */
+    
+            .timer {
+                background: white;
+                
+                /* position */ 
+                position: absolute;
+                top: 3vh;
+                right: 3vw;
+
+                /* sizing */
+                border-radius: 10px;
+                padding: 1vh;
+                min-width: 12.5vh;
+
+                /* shadow */
+                box-shadow: 1vh 1vh 2vh rgba(0, 0, 0, 0.2);
+            }
+
+                /* timer controls */ 
+                .timer h2 {
+                    font-size: 1.25em;
+                    text-align: center;
+                }
+
+                .timer-display {
+                    font-size: 1.75em;
+                    text-align: center;
+                }
+
+                .timer-controls {
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                }
+
+                .timer-controls button {
+                    background: #fda085;
+                    color: white;
+                    border: none;
+                    border-radius: 5px;
+                    padding: 5px 10px;
+                    margin: 5px;
+                    cursor: pointer;
+                }
+
+      
+        /* ---------- Progress Bar ----------- */ 
+
+            /* Progress container styling */
+            .progress-container {
+              background: rgba(255, 255, 255, 0.7); /* Semi-transparent white */
+              position: absolute;
+              top: calc(3vh + 18vh); /* Position just below the timer */
+              right: 3vw;
+              width: 12.5vh; /* Same width as timer */
+              border-radius: 10px;
+              padding: 1vh;
+              box-shadow: 1vh 1vh 2vh rgba(0, 0, 0, 0.2);
+              bottom: 3vh;
+            }
+
+            .progress-container h3 {
+              text-align: center;
+              margin: 0 0 1vh 0;
+              font-size: 1em;
+            }
+
+            /* Progress columns layout */
+            .progress-columns {
+              display: flex;
+              justify-content: space-between;
+              width: 100%;
+              height: calc(100% - 3vh); /* Full height minus the header */
+            }
+
+            .progress-column {
+              width: 45%; /* Slightly less than half to create space between columns */
+              height: 100%;
+              display: flex;
+              flex-direction: column-reverse; /* Blocks will fill from bottom up */
+              gap: 0.4vh; /* Small gap between blocks */
+            }
+
+            /* Styling for the blocks that will be generated by JS */
+            .progress-block {
+              height: 2vh;
+              background-color: rgba(230, 230, 230, 0.5); /* Light gray background */
+              border: 1px solid #e1e1e1;
+              border-radius: 3px;
+              transition: background-color 0.3s ease;
+            }
+
+            /* Active block styling for topics (green) */
+            #topics-progress .progress-block.active {
+              background-color: #4CAF50; /* Green */
+            }
+
+            /* Active block styling for time (blue) */
+            #time-progress .progress-block.active {
+              background-color: #2196F3; /* Blue */
+            }
+
+    
+       
+        /* ---------- Topics Structure ---------- */
+            /* topics list, topic, subtopics, add topic row */
+
+            .topics-structure {
+              margin-top: 30px; /* Space for the timer */
+              padding-left: 40px; /* Align past the red margin line */
+              width: calc(100% - 25vh);
+            }
+
+            .topics-structure h2 {
+              height: 24px; /* Match line height */
+              margin: 0 0 24px 0; /* One line space */
+              padding: 0;
+              font-size: 1.2em;
+            }
+
+            /* Topics list */
+            .topics-list {
+              list-style: none;
+              padding: 0;
+              margin: 0;
+            }
+
+            /* Topic styling */
+            .topic {
+              margin-bottom: 0; /* No extra space between topics */
+            }
+
+            .topic-header {
+              display: flex;
+              align-items: center;
+              height: 24px; /* Match notebook line height */
+              cursor: pointer;
+            }
+
+            .topic-toggle {
+              margin-right: 8px;
+              font-size: 0.8em;
+              transition: transform 0.2s;
+            }
+
+            .topic-toggle.open {
+              transform: rotate(90deg);
+            }
+
+            .topic-name {
+              flex: 1;
+            }
+
+            .topic-complete-check, .subtopic-complete-check {
+              margin-left: 10px;
+              cursor: pointer;
+            }
+
+            /* Subtopics styling */
+            .subtopics {
+              list-style: none;
+              padding-left: 20px; /* Indent subtopics */
+              margin: 0;
+              display: none; /* Initially hidden */
+            }
+
+            .subtopics.open {
+              display: block;
+            }
+
+            .subtopic {
+              display: flex;
+              align-items: center;
+              height: 24px; /* Match notebook line height */
+            }
+
+            .subtopic-name {
+              flex: 1;
+            }
+
+            /* Add topic row */
+            .add-topic-row {
+              display: flex;
+              align-items: center;
+              height: 24px; /* Match line height */
+              margin-top: 24px; /* One line space */
+            }
+
+            .add-topic-row input {
+              height: 22px; /* Slightly smaller to account for borders */
+              border: 1px solid #e1e1e1;
+              border-radius: 3px 0 0 3px;
+              padding: 0 8px;
+              flex: 1;
+              margin-right: 0;
+            }
+
+            .add-topic-row button {
+              height: 24px;
+              background: #fda085;
+              color: white;
+              border: none;
+              border-radius: 0 3px 3px 0;
+              padding: 0 10px;
+              cursor: pointer;
+            }
+
+            /* Completed items styling */
+            .completed .topic-name,
+            .completed .subtopic-name {
+              text-decoration: line-through;
+              color: #aaa;
+            }
+
+            .completed .topic-complete-check,
+            .completed .subtopic-complete-check {
+              content: "☑";
+            }
+
+  </style>
+</head>
+
+<body>
+    <div class="header"> 
+        simply study    
+    </div>
+  <div id="app">     <!-- App content will go here -->
+    <div class="notebook">
+
+       <!-- timer component -->
+            <div class="timer">
+                <h2>pomodoro</h2>
+
+                <div class="timer-display">
+                    <span id="minutes">25</span>:<span id="seconds">00</span>
+                </div>
+
+                <div class="timer-controls"> <!-- timer buttons -->
+                    <button id="start-pause">Start</button>
+                    <button id="reset">Reset</button>
+
+                </div>
+            </div>
+
+       <!-- Progress Container -->
+            <div class="progress-container">
+              <h3>Progress</h3>
+              
+              <div class="progress-columns">
+                <!-- Topics progress (left column - green) -->
+                <div class="progress-column" id="topics-progress"></div>
+                
+                <!-- Time progress (right column - blue) -->
+                <div class="progress-column" id="time-progress"></div>
+              </div>
+            </div>
+
+       <!-- Topics structure directly in notebook -->
+          <div class="topics-structure">
+            <h2>Study Topics</h2>
+            
+            <!-- Topic list with collapsible sections -->
+            <ul class="topics-list">
+              <!-- First topic -->
+              <li class="topic">
+                <div class="topic-header">
+                  <span class="topic-toggle">▶</span>
+                  <span class="topic-name">JavaScript Basics</span>
+                  <span class="topic-complete-check">☐</span>
+                </div>
+                
+                <!-- Subtopics (initially hidden) -->
+                <ul class="subtopics">
+                  <li class="subtopic">
+                    <span class="subtopic-name">Variables & Data Types</span>
+                    <span class="subtopic-complete-check">☐</span>
+                  </li>
+                  <li class="subtopic">
+                    <span class="subtopic-name">Functions</span>
+                    <span class="subtopic-complete-check">☐</span>
+                  </li>
+                </ul>
+              </li>
+              
+              <!-- Second topic -->
+              <li class="topic">
+                <div class="topic-header">
+                  <span class="topic-toggle">▶</span>
+                  <span class="topic-name">CSS Layouts</span>
+                  <span class="topic-complete-check">☐</span>
+                </div>
+                
+                <ul class="subtopics">
+                  <li class="subtopic">
+                    <span class="subtopic-name">Flexbox</span>
+                    <span class="subtopic-complete-check">☐</span>
+                  </li>
+                  <li class="subtopic">
+                    <span class="subtopic-name">Grid</span>
+                    <span class="subtopic-complete-check">☐</span>
+                  </li>
+                </ul>
+              </li>
+            </ul>
+            
+            <!-- Add new topic -->
+            <div class="add-topic-row">
+              <input type="text" id="new-topic" placeholder="Add new topic...">
+              <button id="add-topic-btn">+</button>
+            </div>
+          </div>
+
+
+    </div>
+  </div>
+  <script src="app.js"></script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

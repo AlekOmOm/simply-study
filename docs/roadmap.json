@@ -1,0 +1,223 @@
+{
+   "project": "simple-pomodoro",
+   "description": "roadmap of tasks to build a simple pomodoro timer app",
+   
+   "phases": [
+     {
+       "name": "setup",
+       "description": "initial project setup",
+       "tasks": [
+         {
+           "id": "setup-1",
+           "name": "create directory structure",
+           "description": "set up folders and files",
+           "status": "todo",
+           "priority": "high"
+         },
+         {
+           "id": "setup-2",
+           "name": "install dependencies",
+           "description": "install express for simple server",
+           "status": "todo",
+           "priority": "high"
+         },
+         {
+           "id": "setup-3",
+           "name": "create basic server",
+           "description": "set up express server to serve static files",
+           "status": "todo",
+           "priority": "high"
+         }
+       ]
+     },
+     {
+       "name": "html-structure",
+       "description": "building the user interface structure",
+       "tasks": [
+         {
+           "id": "html-1",
+           "name": "create main layout",
+           "description": "set up overall page structure",
+           "status": "todo",
+           "priority": "high"
+         },
+         {
+           "id": "html-2",
+           "name": "add timer section",
+           "description": "create area for timer display",
+           "status": "todo",
+           "priority": "high"
+         },
+         {
+           "id": "html-3",
+           "name": "add topics section",
+           "description": "create area for topic list",
+           "status": "todo",
+           "priority": "medium"
+         },
+         {
+           "id": "html-4",
+           "name": "add progress section",
+           "description": "create area for progress tracking",
+           "status": "todo",
+           "priority": "medium"
+         }
+       ]
+     },
+     {
+       "name": "styling",
+       "description": "adding css styles",
+       "tasks": [
+         {
+           "id": "css-1",
+           "name": "add basic styles",
+           "description": "set up fonts, colors, and basic layout",
+           "status": "todo",
+           "priority": "medium"
+         },
+         {
+           "id": "css-2",
+           "name": "style timer component",
+           "description": "make timer visually appealing",
+           "status": "todo",
+           "priority": "medium"
+         },
+         {
+           "id": "css-3",
+           "name": "style topics list",
+           "description": "create good looking topic cards",
+           "status": "todo",
+           "priority": "low"
+         },
+         {
+           "id": "css-4",
+           "name": "add responsive design",
+           "description": "make app work on mobile devices",
+           "status": "todo",
+           "priority": "low"
+         }
+       ]
+     },
+     {
+       "name": "core-functionality",
+       "description": "implementing javascript features",
+       "tasks": [
+         {
+           "id": "js-1",
+           "name": "implement timer logic",
+           "description": "create functionality for countdown timer",
+           "status": "todo",
+           "priority": "high"
+         },
+         {
+           "id": "js-2",
+           "name": "add work/break cycle",
+           "description": "implement switching between work and break modes",
+           "status": "todo",
+           "priority": "high"
+         },
+         {
+           "id": "js-3",
+           "name": "create topic management",
+           "description": "allow adding and completing topics",
+           "status": "todo",
+           "priority": "medium"
+         },
+         {
+           "id": "js-4",
+           "name": "implement progress tracking",
+           "description": "track and display completed pomodoros",
+           "status": "todo",
+           "priority": "medium"
+         }
+       ]
+     },
+     {
+       "name": "data-persistence",
+       "description": "saving user data",
+       "tasks": [
+         {
+           "id": "data-1",
+           "name": "add localStorage support",
+           "description": "save sessions to browser storage",
+           "status": "todo",
+           "priority": "low"
+         },
+         {
+           "id": "data-2",
+           "name": "implement session restoration",
+           "description": "load previous session on page load",
+           "status": "todo",
+           "priority": "low"
+         }
+       ]
+     },
+     {
+       "name": "testing",
+       "description": "ensuring app works correctly",
+       "tasks": [
+         {
+           "id": "test-1",
+           "name": "manual testing",
+           "description": "test all features manually",
+           "status": "todo",
+           "priority": "medium"
+         },
+         {
+           "id": "test-2",
+           "name": "fix bugs",
+           "description": "resolve any issues found during testing",
+           "status": "todo",
+           "priority": "medium"
+         }
+       ]
+     },
+     {
+       "name": "deployment",
+       "description": "running the app",
+       "tasks": [
+         {
+           "id": "deploy-1",
+           "name": "run locally",
+           "description": "start server on local machine",
+           "status": "todo",
+           "priority": "high"
+         },
+         {
+           "id": "deploy-2",
+           "name": "optional: deploy to hosting service",
+           "description": "deploy to a free hosting service like Glitch or Render",
+           "status": "todo",
+           "priority": "low"
+         }
+       ]
+     }
+   ],
+   
+   "learning_milestones": [
+     {
+       "name": "html-basics",
+       "description": "learn to structure a web application with html"
+     },
+     {
+       "name": "css-fundamentals",
+       "description": "understand basic styling with css"
+     },
+     {
+       "name": "javascript-basics",
+       "description": "implement core programming concepts with javascript"
+     },
+     {
+       "name": "dom-manipulation",
+       "description": "interact with page elements using javascript"
+     },
+     {
+       "name": "state-management",
+       "description": "manage application data and state"
+     },
+     {
+       "name": "node-basics",
+       "description": "run a simple server with node.js"
+     }
+   ]
+ }

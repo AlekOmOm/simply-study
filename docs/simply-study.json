@@ -1,0 +1,87 @@
+{
+   "project": {
+     "name": "simple study timer",
+     "description": "a basic pomodoro timer for studying",
+     "version": "0.1.0"
+   },
+   
+   "basics": {
+     "what": "a timer that helps you study using 25-minute work periods and 5-minute breaks",
+     "why": "helps beginners manage study time without getting overwhelmed"
+   },
+   
+   "features": [
+     {
+       "name": "create study session",
+       "steps": [
+         "give your session a name",
+         "add study topics",
+         "start the timer"
+       ]
+     },
+     {
+       "name": "use the timer",
+       "steps": [
+         "work for 25 minutes",
+         "take a 5-minute break",
+         "repeat until finished"
+       ]
+     },
+     {
+       "name": "track progress",
+       "steps": [
+         "mark topics as complete",
+         "see how many cycles you've finished"
+       ]
+     }
+   ],
+   
+   "components": [
+     {
+       "name": "timer",
+       "what_it_does": "counts down time and switches between work and break modes",
+       "functions": ["start()", "pause()", "reset()"]
+     },
+     {
+       "name": "topics",
+       "what_it_does": "shows your study topics and lets you mark them complete",
+       "functions": ["addTopic()", "markComplete()"]
+     },
+     {
+       "name": "progress",
+       "what_it_does": "shows how much you've accomplished",
+       "functions": ["updateProgress()"]
+     }
+   ],
+   
+   "data": {
+     "session": {
+       "name": "string",
+       "topics": "array of topics",
+       "completed_cycles": "number"
+     },
+     "topic": {
+       "name": "string",
+       "completed": "boolean (true/false)"
+     },
+     "timer_state": {
+       "mode": "work or break",
+       "time_left": "seconds",
+       "current_topic": "topic name"
+     }
+   },
+   
+   "files": {
+     "index.html": "main page with html structure",
+     "style.css": "makes everything look nice",
+     "app.js": "contains all the javascript code",
+     "server.js": "simple node server to run the app"
+   },
+   
+   "learning_goals": [
+     "practice basic javascript",
+     "learn to use timers",
+     "store data in the browser",
+     "create a simple user interface"
+   ]
+ }
