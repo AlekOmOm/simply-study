@@ -42,4 +42,4 @@ echo $! > app.pid
 
 echo "Server started with PID $(cat app.pid)"
 echo "You can check the logs with: tail -f app.log"
-echo "Your app should be available at http://localhost:3000"
+echo "Your app should be available at http://localhost:8081"
